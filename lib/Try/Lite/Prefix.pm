@@ -7,6 +7,8 @@ our $VERSION = '0.01';
 
 use parent qw/Exporter/;
 
+our @EXPORT = qw/try/;
+
 use Carp;
 use Try::Lite ();
 
@@ -20,20 +22,20 @@ sub import {
     $class->export_to_level(1);
 }
 
-sub try(&;%) {
+sub try (&;%) { ## no critic
     my ($try, @catches) = @_;
     my $caller = caller;
 
     my @added_catches;
     while (my ($ex, $catch) = splice @catches, 0, 2){
-        if ($ex =~ /^+/) {
-            $ex =~ s/^+//;
-        } else {
-            $ex = join '::', $PREFIX->{$caller}
+        if ($ex =~ /^\+/) {
+            $ex =~ s/^\+//;
+        } elsif ($ex ne '*') {
+            $ex = join '::', $PREFIX->{$caller}, $ex;
         }
         push @added_catches, $ex, $catch;
     }
-    Try::Lite::try $try, @added_catches;
+    &Try::Lite::try($try, @added_catches);
 }
 
 1;
