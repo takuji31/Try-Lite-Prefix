@@ -1,22 +1,63 @@
 NAME
-    Try::Lite::Prefix - Perl extention to do something
+    Try::Lite::Prefix - Try::Lite with package prefix
 
 VERSION
     This document describes Try::Lite::Prefix version 0.01.
 
 SYNOPSIS
-        use Try::Lite::Prefix;
+        package YourExceptionClass;
+
+        package YourExceptionClass::Foo;
+        use parent qw/Exception::Tiny/;
+
+        package YourExceptionClass::Bar;
+        use parent qw/Exception::Tiny/;
+
+        1;
+
+        package OtherException;
+        use parent qw/Exception::Tiny/;
+
+        1;
+
+
+
+        use Try::Lite::Prefix 'YourExceptionClass';
+        use YourExceptionClass;
+
+        try {
+            YourExceptionClass::Foo->throw;
+        }
+        'Foo' => sub {
+            # catch YourExceptionClass::Foo
+            say 'Foo';
+        },
+        'Bar' => sub {
+            # catch YourExceptionClass::Bar
+            say 'Bar';
+        },
+        '+OtherException' => sub {
+            # catch OtherException
+            say 'OtherException';
+        };
 
 DESCRIPTION
-    # TODO
+    This module likes Try::Lite. But supports exception class prefix. Many
+    times to write the same prefix is redundant is not it?
 
 INTERFACE
   Functions
-   "hello()"
+   "try"
+    see Try::Lite. However, this function you can omit the prefix that you
+    specified. If you want to write the name of the class if full, please
+    put a + at the beginning.
+
     # TODO
 
 DEPENDENCIES
     Perl 5.8.1 or later.
+
+    Try::Lite
 
 BUGS
     All complex software has bugs lurking in it, and this module is no

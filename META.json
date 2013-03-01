@@ -1,5 +1,5 @@
 {
-   "abstract" : "Perl extention to do something",
+   "abstract" : "Try::Lite with package prefix",
    "author" : [
       "Nishibayashi Takuji E<lt>takuji31@gmail.comE<gt>"
    ],
@@ -21,6 +21,8 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Exception::Tiny" : "0",
+            "Test::Exception" : "0",
             "Test::More" : "0.98",
             "Test::Requires" : "0.06"
          }
@@ -32,8 +34,15 @@
       },
       "runtime" : {
          "requires" : {
+            "Try::Lite" : "0",
             "perl" : "5.008001"
          }
+      }
+   },
+   "provides" : {
+      "Try::Lite::Prefix" : {
+         "file" : "lib/Try/Lite/Prefix.pm",
+         "version" : "0.01"
       }
    },
    "release_status" : "stable",

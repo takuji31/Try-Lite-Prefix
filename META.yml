@@ -1,8 +1,10 @@
 ---
-abstract: 'Perl extention to do something'
+abstract: 'Try::Lite with package prefix'
 author:
   - 'Nishibayashi Takuji E<lt>takuji31@gmail.comE<gt>'
 build_requires:
+  Exception::Tiny: 0
+  Test::Exception: 0
   Test::More: 0.98
   Test::Requires: 0.06
 configure_requires:
@@ -17,7 +19,12 @@ name: Try-Lite-Prefix
 no_index:
   directory:
     - inc
+provides:
+  Try::Lite::Prefix:
+    file: lib/Try/Lite/Prefix.pm
+    version: 0.01
 requires:
+  Try::Lite: 0
   perl: 5.008001
 resources:
   license: http://dev.perl.org/licenses/

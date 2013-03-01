@@ -43,7 +43,7 @@ __END__
 
 =head1 NAME
 
-Try::Lite::Prefix - 
+Try::Lite::Prefix -  Try::Lite with package prefix
 
 =head1 VERSION
 
@@ -51,33 +51,64 @@ This document describes Try::Lite::Prefix version 0.01.
 
 =head1 SYNOPSIS
 
+    package YourExceptionClass;
+
     package YourExceptionClass::Foo;
+    use parent qw/Exception::Tiny/;
+
+    package YourExceptionClass::Bar;
+    use parent qw/Exception::Tiny/;
+
+    1;
+
+    package OtherException;
+    use parent qw/Exception::Tiny/;
+
+    1;
+
+
 
     use Try::Lite::Prefix 'YourExceptionClass';
+    use YourExceptionClass;
 
     try {
         YourExceptionClass::Foo->throw;
     }
     'Foo' => sub {
-        # handle exception
+        # catch YourExceptionClass::Foo
         say 'Foo';
+    },
+    'Bar' => sub {
+        # catch YourExceptionClass::Bar
+        say 'Bar';
+    },
+    '+OtherException' => sub {
+        # catch OtherException
+        say 'OtherException';
     };
 
 =head1 DESCRIPTION
 
-# TODO
+This module likes L<Try::Lite>. But supports exception class prefix.
+Many times to write the same prefix is redundant is not it?
 
 =head1 INTERFACE
 
 =head2 Functions
 
-=head3 C<< hello() >>
+=head3 C<< try >>
+
+see L<Try::Lite>.
+However, this function you can omit the prefix that you specified.
+If you want to write the name of the class if full, please put a + at the beginning.
 
 # TODO
 
 =head1 DEPENDENCIES
 
 Perl 5.8.1 or later.
+
+L<Try::Lite>
 
 =head1 BUGS
 
