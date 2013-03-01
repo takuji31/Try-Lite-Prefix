@@ -9,12 +9,14 @@ my $build = Module::Build->new(
     # dist_abstract  => 'XXX',
 
     build_requires     => {
-        'Test::More'     => '0.98',
-        'Test::Requires' => '0.06',
+        'Test::More'      => '0.98',
+        'Test::Requires'  => '0.06',
+        'Exception::Tiny' => 0,
     },
     configure_requires => { 'Module::Build' => '0.38' },
     requires           => {
         perl         => '5.008001',
+        'Try::Lite'  => 0,
         # 'parent'     => 0,
     },
 
